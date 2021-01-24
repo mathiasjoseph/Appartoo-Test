@@ -1,0 +1,73 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+      <div class='ui-block responsive-flex'>
+        <div class='ui-block-title'>
+          <div  *ngIf='currentPangolin$|async as _currentUser' class='h6 title'>
+            Amis de {{_currentUser.firstname}}  ({{_currentUser.friends.length}})
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+  <div class='row'>
+    <div *ngFor='let pangolin of pangolins$|async'
+         class='col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12'>
+      <div class='ui-block'>
+        <div class='friend-item'>
+          <div class='friend-header-thumb'>
+            <img src='./assets/img/dI.jpg' alt='friend'>
+          </div>
+
+          <div class='friend-item-content'>
+
+            <div class='swiper-container my-10'>
+              <div class='swiper-wrapper'>
+                <div class='swiper-slide'>
+                  <div class='friend-count'>
+                    <span class='friend-count-item'>
+                      <div class='h6'>{{pangolin.friends.length}}</div>
+                      <div class='title'>Amis</div>
+                    </span>
+                    <span class='friend-count-item'>
+                      <div class='h6'>{{pangolin.age}}</div>
+                      <div class='title'>Age</div>
+                    </span>
+                    <span class='friend-count-item'>
+                      <div class='h6'>{{pangolin.team}}</div>
+                      <div class='title'>Team</div>
+                    </span>
+                  </div>
+                  <div class='control-block-button' data-swiper-parallax='-100'>
+                    <button *ngIf='!(isFriend(pangolin["_id"])|async)' (click)='addFriend(pangolin["_id"])'
+                            class='btn  bg-blue'>
+                      <i class='fa fa-plus' aria-hidden='true'></i>
+                    </button>
+
+                    <button *ngIf='(isFriend(pangolin["_id"])|async)' (click)='removeFriend(pangolin["_id"])'
+                            class='btn bg-google'>
+                      <i class='fa fa-times' aria-hidden='true'></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class='friend-avatar'>
+              <div class='author-content'>
+                <a href='#' class='h5 author-name'>Nicholas Grissom</a>
+                <div class='country'>San Francisco, CA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

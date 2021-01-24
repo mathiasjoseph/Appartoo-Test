@@ -1,0 +1,93 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col '>
+      <div class='ui-block'>
+        <div class='ui-block-title'>
+          <h6 class='title'>Votre profil</h6>
+        </div>
+        <div class='ui-block-content'>
+          <form [formGroup]='profileForm'>
+            <div class='row'>
+
+              <div class='col col-lg-6 col-md-6 col-sm-12 col-12'>
+                <div class='form-group '>
+                  <label class='control-label'>Prénom</label>
+                  <input class='form-control' placeholder='James' type='text' formControlName='firstname'>
+                </div>
+                <div class='form-group '>
+                  <label class='control-label'>Email</label>
+                  <input class='form-control' placeholder='Email' type='email' formControlName='email'>
+                </div>
+              </div>
+
+              <div class='col col-lg-6 col-md-6 col-sm-12 col-12'>
+                <div class='form-group '>
+                  <label class='control-label'>Age</label>
+                  <input class='form-control' placeholder='' type='number' value='0' formControlName='age'>
+                </div>
+
+                <div class='form-group '>
+                  <label class='control-label'>Famille</label>
+                  <input class='form-control' placeholder='Jaune' type='text' value='Jaune' formControlName='family'>
+                </div>
+
+              </div>
+              <div class='col col-lg-4 col-md-4 col-sm-12 col-12'>
+                <div class='form-group  is-select'>
+                  <label class='control-label'>Race</label>
+                  <select class=' form-control' formControlName='race'>
+                    <option value='Pangolin malais'>Pangolin malais</option>
+                    <option value='Pangolin de Chine'>Pangolin de Chine</option>
+                    <option value='Pangolin indien'>Pangolin indien</option>
+                    <option value='Pangolin des Philippines'>Pangolin des Philippines</option>
+                    <option value='Pangolin géant'>Pangolin géant</option>
+                    <option value='Pangolin du Cap'>Pangolin du Cap</option>
+                    <option value='Pangolin à longue queue'>Pangolin à longue queue</option>
+                    <option value='Pangolin à petites écailles'>Pangolin à petites écailles</option>
+                  </select>
+                </div>
+              </div>
+              <div class='col col-lg-4 col-md-4 col-sm-12 col-12'>
+                <div class='form-group  is-select'>
+                  <label class='control-label'>Nourriture</label>
+                  <select class=' form-control' formControlName='food'>
+                    <option value='Fourmis'>Fourmis</option>
+                    <option value='Termites'>Termites</option>
+                  </select>
+                </div>
+              </div>
+              <div class='col col-lg-4 col-md-4 col-sm-12 col-12'>
+                <div class='form-group  is-select'>
+                  <label class='control-label'>Team</label>
+                  <select class=' form-control' formControlName='team'>
+                    <option value='Vert'>Vert</option>
+                    <option value='Rouge'>Rouge</option>
+                    <option value='Noir'>Noir</option>
+                    <option value='Gris'>Gris</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class='col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                <div class='form-group with-icon '>
+                  <label class='control-label'>Facebook</label>
+                  <input class='form-control' type='text' value='www.facebook.com' formControlName='facebook'>
+                  <i class='fab fa-facebook-f c-facebook' aria-hidden='true'></i>
+                </div>
+                <div class='form-group with-icon '>
+                  <label class='control-label'>Twitter</label>
+                  <input class='form-control' type='text' value='www.twitter.com' formControlName='twitter'>
+                  <i class='fab fa-twitter c-twitter' aria-hidden='true'></i>
+                </div>
+              </div>
+              <div class='col col-lg-6 col-md-6 col-sm-12 col-12'>
+                <button (click)='save()' class='btn btn-primary btn-lg full-width'>Sauvegarde</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

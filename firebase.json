@@ -1,0 +1,18 @@
+{
+
+  "hosting": {
+    "site": "appartoo-test",
+    "public": "dist/apps/frontend",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+<div  style='margin-top: 110px;' class='container'>
+  <div class='row'>
+    <div class='col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+      <div class='ui-block'>
+        <div class='top-header'>
+
+          <div class='profile-section'>
+            <div class='row'>
+              <div class='col col-lg-5 col-md-5 col-sm-12 col-12'>
+                <ul class='profile-menu'>
+                  <li>
+                    <a routerLink='/users/nation'>Amis</a>
+                  </li>
+                  <li>
+                    <a routerLink='/users'>Mon Profil</a>
+                  </li>
+                </ul>
+              </div>
+              <div class='col col-lg-5 ml-auto col-md-5 col-sm-12 col-12'>
+                <ul class='profile-menu'>
+                  <li>
+                    <a href='javascript:void(0)' (click)='logout()'>Déconnexion</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+          </div>
+          <div class='top-header-author'>
+            <a href='#' class='author-thumb'>
+              <img src='./assets/img/dI.jpg' style='width: 100%;'>
+            </a>
+            <div *ngIf='currentPangolin$|async as _currentUser' class='author-content'>
+              <a href='#' class='h4 author-name'>{{_currentUser.firstname}}</a>
+              <div class='country'>Team : {{_currentUser.team}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

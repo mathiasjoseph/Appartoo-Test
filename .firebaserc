@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "appartoo-test"
+  },
+  "targets": {
+    "poomos": {
+      "hosting": {
+        "appartoo-test": [
+          "appartoo-test"
+        ]
+      }
+    }
+  }
+}
