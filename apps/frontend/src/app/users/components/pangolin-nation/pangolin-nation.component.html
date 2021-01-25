@@ -16,6 +16,38 @@
 
 <div class='container'>
   <div class='row'>
+    <div class='col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+      <div class='ui-block responsive-flex'>
+        <h6 >Créer un amis</h6>
+        <form [formGroup]='createFriendForm' >
+          <div class='col col-lg-6 col-md-6 col-sm-12 col-12'>
+            <div class='form-group '>
+              <label class='control-label'>Nom d'utilisateur</label>
+              <input class='form-control' placeholder='Username' type='text' formControlName='username'>
+            </div>
+            <div class='form-group '>
+              <label class='control-label'>Email</label>
+              <input class='form-control' placeholder="Email" type='text' formControlName='email'>
+            </div>
+            <div class='form-group '>
+              <label class='control-label'>Mot de passe</label>
+              <input class='form-control' placeholder="Pass" type='pass' formControlName='password'>
+            </div>
+          </div>
+
+          {{createFriendForm.value|json}}
+          <div class='col col-lg-6 col-md-6 col-sm-12 col-12'>
+            <button (click)='createFriend()' class='btn btn-primary btn-lg full-width'>Sauvegarde</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+  <div class='row'>
     <div *ngFor='let pangolin of pangolins$|async'
          class='col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12'>
       <div class='ui-block'>
@@ -59,8 +91,9 @@
             </div>
             <div class='friend-avatar'>
               <div class='author-content'>
-                <a href='#' class='h5 author-name'>Nicholas Grissom</a>
-                <div class='country'>San Francisco, CA</div>
+                <a href='#' class='h5 author-name'>{{pangolin.firstname}}</a>
+                <div class='country'>{{pangolin.race}}</div>
+                <div class='country'>{{pangolin.email}}</div>
               </div>
             </div>
           </div>

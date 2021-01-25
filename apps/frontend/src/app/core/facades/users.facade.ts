@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthState, selectUsersList } from '../reducers';
 import { Store } from '@ngrx/store';
-import { addFriend, loadUsers, removeFriend, updateProfile } from '../actions';
+import { addFriend, createFriend, loadUsers, removeFriend, updateProfile } from '../actions';
 import { Profile, User } from '../models';
 
 @Injectable({
@@ -28,5 +28,8 @@ export class UsersFacade {
 
   addFriend(friendId: string) {
     this.store.dispatch(addFriend({ friendId }));
+  }
+  createFriend(user: User){
+    this.store.dispatch(createFriend({user}));
   }
 }

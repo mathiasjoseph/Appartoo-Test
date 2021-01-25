@@ -8,7 +8,7 @@ import { AuthState } from '../reducers';
 import {
   addFriend,
   addFriendFailure,
-  addFriendSuccess,
+  addFriendSuccess, createFriend, createFriendFailure, createFriendSuccess,
   loadCurrentPangoSuccess,
   loadUsers,
   loadUsersFailure,
@@ -51,6 +51,20 @@ export class UsersEffects {
             return addFriendSuccess({ user: data });
           }),
           catchError((e) => of(addFriendFailure()))
+        )
+      )
+    )
+  );
+
+  createFriend$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createFriend),
+      mergeMap((payload) =>
+        this.usersService.createFriend(payload).pipe(
+          map((data) => {
+            return createFriendSuccess({ user: data });
+          }),
+          catchError((e) => of(createFriendFailure()))
         )
       )
     )

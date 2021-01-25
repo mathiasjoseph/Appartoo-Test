@@ -31,6 +31,16 @@ export class UsersService extends BaseService {
       );
   }
 
+  createFriend(payload) {
+    return this.http
+      .post<any>(`${this.url}/friends/create`, payload.user)
+      .pipe(
+        map((user) => {
+          return user;
+        })
+      );
+  }
+
   removeFriend(friendId: string) {
     return this.http
       .post<any>(`${this.url}/friends/${friendId}/remove`, null)

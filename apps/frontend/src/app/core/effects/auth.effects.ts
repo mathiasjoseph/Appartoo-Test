@@ -40,6 +40,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(loginSuccess),
       map(() => {
+        this.router.navigateByUrl('/');
         return loadCurrentPango();
       })
     )

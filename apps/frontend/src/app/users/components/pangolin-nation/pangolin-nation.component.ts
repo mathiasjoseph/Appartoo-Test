@@ -3,6 +3,7 @@ import { AuthFacade, UsersFacade } from '../../../core/facades';
 import { Observable } from 'rxjs';
 import { User } from '../../../core/models';
 import { map } from 'rxjs/operators';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'appartoo-test-pangolin-nation',
@@ -12,6 +13,13 @@ import { map } from 'rxjs/operators';
 export class PangolinNationComponent implements OnInit {
   pangolins$: Observable<User[]>;
   currentPangolin$: Observable<User>;
+
+  createFriendForm = new FormGroup({
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]),
+  });
+
 
   constructor(
     private authFacade: AuthFacade,
@@ -44,5 +52,13 @@ export class PangolinNationComponent implements OnInit {
     );
   }
 
+
+  createFriend(){
+
+    console.log(this.createFriendForm.valid)
+    if(this.createFriendForm.valid){
+      this.usersFacade.createFriend(this.createFriendForm.value);
+    }
+  }
 
 }

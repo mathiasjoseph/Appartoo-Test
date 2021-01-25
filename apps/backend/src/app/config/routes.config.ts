@@ -15,6 +15,7 @@ export class RoutesConfig {
     app.use('/users', checkJwt);
     app.use('/friends/:id/remove', checkJwt);
     app.use('/friends/:id/add', checkJwt);
+    app.use('/friends/create', checkJwt);
     app
       .route('/login')
       .post(this.authController.login.bind(this.authController));
@@ -25,6 +26,9 @@ export class RoutesConfig {
     app
       .route('/friends/:id/add')
       .post(this.usersController.addFriend.bind(this.authController));
+    app
+      .route('/friends/create')
+      .post(this.usersController.createFriend.bind(this.usersController));
     app
       .route('/users')
       .get(this.usersController.getAllUsers.bind(this.usersController));

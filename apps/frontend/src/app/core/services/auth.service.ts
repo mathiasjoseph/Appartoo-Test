@@ -48,11 +48,5 @@ export class AuthService extends BaseService {
     );
   }
 
-  allUsers(): Observable<User[]> {
-    return this.http.get<any>(`${this.url}/users`).pipe(
-      map((users) => {
-        return users;
-      })
-    );
-  }
+
 }

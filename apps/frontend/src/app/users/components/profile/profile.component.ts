@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             race: user.race,
             food: user.food,
             team: user.team,
-            prenom: user.prenom,
+            firstname: user.firstname,
             twitter: user.twitter,
             facebook: user.facebook
           });

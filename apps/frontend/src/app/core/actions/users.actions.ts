@@ -39,3 +39,13 @@ export const removeFriendSuccess = createAction(
   '[Users] Add Remove Success',
   props<{ user: User }>()
 );
+
+export const createFriend = createAction(
+  '[Users] Pango Create Friend',
+  props<{ username: string; password: string; email: string }>()
+);
+export const createFriendFailure = createAction('[Users] Create Friend Failure');
+export const createFriendSuccess = createAction(
+  '[Users] Create Friend Success',
+  props<{ user: User }>()
+);
