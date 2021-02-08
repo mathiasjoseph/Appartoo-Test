@@ -1,25 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthFacade, UsersFacade } from '../../../core/facades';
 import { Observable } from 'rxjs';
-import { User } from '../../../core/models';
 import { map } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUser } from '@pangolin/types';
 
 @Component({
   selector: 'appartoo-test-pangolin-nation',
   templateUrl: './pangolin-nation.component.html',
-  styleUrls: ['./pangolin-nation.component.scss']
+  styleUrls: ['./pangolin-nation.component.scss'],
 })
 export class PangolinNationComponent implements OnInit {
-  pangolins$: Observable<User[]>;
-  currentPangolin$: Observable<User>;
-
-  createFriendForm = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required]),
-  });
-
+  pangolins$: Observable<IUser[]>;
+  currentPangolin$: Observable<IUser>;
 
   constructor(
     private authFacade: AuthFacade,
@@ -44,21 +37,22 @@ export class PangolinNationComponent implements OnInit {
   isFriend(id: string): Observable<boolean> {
     return this.currentPangolin$.pipe(
       map((c) => {
-        if (c){
-          return c.friends.includes(id);
+        if (c) {
+          return c.friendIds.includes(id);
         }
         return false;
       })
     );
   }
 
-
-  createFriend(){
-
-    console.log(this.createFriendForm.valid)
-    if(this.createFriendForm.valid){
-      this.usersFacade.createFriend(this.createFriendForm.value);
-    }
+  isPendingFriend(id: string): Observable<boolean> {
+    return this.currentPangolin$.pipe(
+      map((c) => {
+        if (c) {
+          return c.friendRequestSubmissions.includes(id);
+        }
+        return false;
+      })
+    );
   }
-
 }

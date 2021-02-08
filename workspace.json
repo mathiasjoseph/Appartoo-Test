@@ -80,12 +80,23 @@
               "apps/frontend/src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.css",
-              "apps/frontend/src/styles.scss"
+              "apps/frontend/src/assets/plugins/bootstrap/css/bootstrap.min.css",
+              "apps/frontend/src/assets/plugins/codrops-stepsform/css/component.css",
+              "apps/frontend/src/assets/plugins/pace/pace-theme-flash.css",
+              "apps/frontend/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+              "node_modules/focus-visible/dist/focus-visible.min.js",
+              "node_modules/scrollreveal/dist/scrollreveal.js",
+              "apps/frontend/src/assets/javascript/pages.js",
+              "node_modules/masonry-layout/dist/masonry.pkgd.min.js",
+              "node_modules/isotope-layout/dist/isotope.pkgd.min.js",
+              "node_modules/imagesloaded/imagesloaded.pkgd.js",
+              "apps/frontend/src/assets/plugins/modernizr.custom.js",
+              "apps/frontend/src/assets/plugins/codrops-stepsform/js/classie.js",
+              "apps/frontend/src/assets/plugins/codrops-stepsform/js/stepsForm.js",
+              "apps/frontend/src/assets/plugins/skycons/skycons.js"
             ]
           },
           "configurations": {
@@ -192,12 +203,61 @@
           }
         }
       }
+    },
+    "types": {
+      "root": "libs/types",
+      "sourceRoot": "libs/types/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/common/types/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/types"
+          ],
+          "options": {
+            "jestConfig": "libs/types/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "graphql": {
+      "root": "libs/graphql",
+      "sourceRoot": "libs/graphql/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/graphql/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/graphql"
+          ],
+          "options": {
+            "jestConfig": "libs/graphql/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
     "defaultCollection": "@nrwl/express"
   },
-  "defaultProject": "backend",
   "generators": {
     "@nrwl/angular:application": {
       "unitTestRunner": "jest",

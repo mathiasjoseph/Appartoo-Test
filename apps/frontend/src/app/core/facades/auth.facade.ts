@@ -3,21 +3,18 @@ import { Observable } from 'rxjs';
 import { AuthState, selectCurrentPango, selectLoggedIn } from '../reducers';
 import { Store } from '@ngrx/store';
 import { loadCurrentPango, login, logout, register } from '../actions';
-import { User } from '../models';
+import { IUser } from '@pangolin/types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthFacade {
-  currentPango$: Observable<User> = this.store.select(selectCurrentPango);
+  currentPango$: Observable<IUser> = this.store.select(selectCurrentPango);
   isLoggedIn$ = this.store.select(selectLoggedIn);
 
-  constructor(private store: Store<AuthState>) {
+  constructor(private store: Store<AuthState>) {}
 
-  }
-
-
-  login(payload: { username: string, password: string }) {
+  login(payload: { email: string; password: string }) {
     this.store.dispatch(login(payload));
   }
 
@@ -25,7 +22,13 @@ export class AuthFacade {
     this.store.dispatch(loadCurrentPango());
   }
 
-  register(payload: { username: string, password: string, email: string }) {
+  register(payload: {
+    username: string;
+    password: string;
+    email: string;
+    age: number;
+    firstname: string;
+  }) {
     this.store.dispatch(register(payload));
   }
 

@@ -1,26 +1,19 @@
-import app from './app/app';
-import * as mongoose from 'mongoose';
-import { mongooseConfig } from './app/config/db.config';
+/**
+ * This is not a production server yet!
+ * This is only a minimal backend to get started.
+ */
 
-mongoose
-  .connect(mongooseConfig.MONGO_DB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log('Connexion à la base de donnée des pangolins réussis.');
-    initApp();
-  })
-  .catch(err => {
-    console.error('Connexion à la base de donnée des pangolins échoué.', err);
-    process.exit();
-  });
+import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 
+import { AppModule } from './app/app.module';
 
-function initApp() {
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
-  const server = app.listen(port, () => {
-    console.log(`Pangolin Nation sur le port ${port}!`);
+  await app.listen(port, '0.0.0.0', () => {
+    Logger.log('Listening at http://localhost:' + port + '/');
   });
-  server.on('error', console.error);
 }
+
+bootstrap();

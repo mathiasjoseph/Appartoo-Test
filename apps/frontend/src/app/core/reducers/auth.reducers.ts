@@ -1,9 +1,15 @@
-import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import {
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
 import { loadCurrentPangoSuccess, loggedOut, loginSuccess } from '../actions';
-import { User } from '../models';
+import { IUser } from '@pangolin/types';
 
 export interface AuthState {
-  currentPango: User;
+  currentPango: IUser;
   id: string;
   loggedIn: boolean;
 }
@@ -11,27 +17,23 @@ export interface AuthState {
 export const initialState: AuthState = {
   currentPango: null,
   id: null,
-  loggedIn: false
+  loggedIn: false,
 };
 
 export const reducer = createReducer(
   initialState,
   on(loginSuccess, (state) => ({
     ...state,
-    loggedIn: true
+    loggedIn: true,
   })),
   on(loadCurrentPangoSuccess, (state, { user }) => ({
     ...state,
     currentPango: user,
-    id: user['_id']
+    id: user['id'],
   })),
   on(loggedOut, (state) => ({
     ...state,
-    ...initialState
-  })),
-  on(loadCurrentPangoSuccess, (state, { user }) => ({
-    ...state,
-    currentUser: user
+    ...initialState,
   }))
 );
 

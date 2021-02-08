@@ -1,61 +1,106 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Profile, User } from '../models';
 import { HttpClient } from '@angular/common/http';
-import { BaseService } from './base.service';
-import { map } from 'rxjs/operators';
 
+import { IProfile, IUser } from '@pangolin/types';
+import { map } from 'rxjs/operators';
+import {
+  SearchUserGQL,
+  InviteUserGQL,
+  UsersGQL,
+  AddFriendGQL,
+  RemoveFriendGQL,
+  UpdateProfileGQL,
+  AcceptFriendGQL,
+} from '@pangolin/graphql';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UsersService extends BaseService {
-  constructor(private http: HttpClient) {
-    super();
+export class UsersService {
+  constructor(
+    private searchUserGQL: SearchUserGQL,
+    private inviteUserGQL: InviteUserGQL,
+    private usersGQL: UsersGQL,
+    private addFriendGQL: AddFriendGQL,
+    private removeFriendGQL: RemoveFriendGQL,
+    private updateProfileGQL: UpdateProfileGQL,
+    private acceptFriendGQL: AcceptFriendGQL
+  ) {}
+
+  updateProfile(payload: IProfile) {
+    return this.updateProfileGQL
+      .mutate({
+        profile: {
+          age: payload.age,
+          family: payload.family,
+          race: payload.race,
+          firstname: payload.firstname,
+          food: payload.food,
+          team: payload.team,
+          twitter: payload.twitter,
+          facebook: payload.facebook,
+        },
+      })
+      .pipe(map((result) => result.data.updateProfile));
   }
 
-  updateProfile(payload: Profile) {
-    return this.http.post<any>(`${this.url}/profile/update`, payload).pipe(
-      map((user) => {
-        return user;
+  createFriend(payload: IUser) {
+    return this.inviteUserGQL
+      .mutate({
+        payload: {
+          username: payload.username,
+          email: payload.email,
+          password: payload.password,
+          age: payload.age,
+          firstname: payload.firstname,
+        },
       })
-    );
+      .pipe(map((result) => result.data.inviteUser));
   }
 
   addFriend(friendId: string) {
-    return this.http
-      .post<any>(`${this.url}/friends/${friendId}/add`, null)
-      .pipe(
-        map((user) => {
-          return user;
-        })
-      );
+    return this.addFriendGQL
+      .mutate({
+        friendId,
+      })
+      .pipe(map((result) => result.data.addFriend));
   }
 
-  createFriend(payload) {
-    return this.http
-      .post<any>(`${this.url}/friends/create`, payload.user)
-      .pipe(
-        map((user) => {
-          return user;
-        })
-      );
+  acceptFriend(friendId: string) {
+    return this.acceptFriendGQL
+      .mutate({
+        friendId,
+      })
+      .pipe(map((result) => result.data.acceptFriend));
   }
 
   removeFriend(friendId: string) {
-    return this.http
-      .post<any>(`${this.url}/friends/${friendId}/remove`, null)
-      .pipe(
-        map((user) => {
-          return user;
-        })
-      );
+    return this.removeFriendGQL
+      .mutate({
+        friendId,
+      })
+      .pipe(map((result) => result.data.removeFriend));
   }
 
-  allUsers(): Observable<User[]> {
-    return this.http.get<any>(`${this.url}/users`).pipe(
-      map((users) => {
-        return users;
-      })
-    );
+  allUsers(): Observable<IUser[]> {
+    return this.usersGQL
+      .watch(
+        {},
+        {
+          fetchPolicy: 'network-only',
+        }
+      )
+      .valueChanges.pipe(map((result) => result.data.users));
+  }
+
+  searchUser(text: string) {
+    return this.searchUserGQL
+      .watch(
+        { search: text },
+        {
+          fetchPolicy: 'network-only',
+        }
+      )
+      .valueChanges.pipe(map((result) => result.data.searchUser));
   }
 }

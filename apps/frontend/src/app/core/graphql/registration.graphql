@@ -1,0 +1,10 @@
+
+
+mutation register($payload: RegisterInput!) {
+  register(payload: $payload) {
+    username,
+    email
+  }
+}
+
+

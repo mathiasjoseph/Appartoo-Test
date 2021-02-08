@@ -7,13 +7,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { pangoAuthReducer, pangoUsersReducer } from './reducers';
 import { AuthEffects, UsersEffects } from './effects';
+import { RegistrationEffects } from './effects/registration.effects';
 
-
-export interface AppState {
-}
+export interface AppState {}
 
 export const reducers: ActionReducerMap<AppState> = {};
-export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<AppState>[] = !environment.production
+  ? []
+  : [];
 
 @NgModule({
   declarations: [],
@@ -21,17 +22,12 @@ export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [
     CommonModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, {
-      metaReducers
+      metaReducers,
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature('pango-auth', pangoAuthReducer),
     StoreModule.forFeature('pango-users', pangoUsersReducer),
-    EffectsModule.forRoot([
-      AuthEffects,
-      UsersEffects
-    ])
-
-  ]
+    EffectsModule.forRoot([AuthEffects, UsersEffects, RegistrationEffects]),
+  ],
 })
-export class CoreModule {
-}
+export class CoreModule {}

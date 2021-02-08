@@ -1,0 +1,48 @@
+<pg-container>
+  <div class='container '>
+    <div class='row'>
+      <div class='col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+        <div class='ui-block responsive-flex'>
+          <div class='ui-block-title'>
+        <!--    <div *ngIf='currentPangolin$|async as _currentUser' class='h6 title'>
+              Amis de {{_currentUser.firstname}}  ({{_currentUser.friendIds.length}})
+            </div>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='row'>
+      <div *ngFor='let pangolin of friendRequests$|async'
+           class='col-md-3'>
+        <div class='col-md-12'>
+          <div class=' card social-card share col1 ng-star-inserted' style="width: inherit;">
+            <div class='circle' data-container='body' data-toggle='tooltip' title='Label'></div>
+            <div class='card-header clearfix'>
+              <div class='user-pic'>
+                <img width='33' class='ng-tns-c25-25 ng-star-inserted'
+                     src='./assets/img/dI.jpg'></div>
+              <h5>{{pangolin.firstname}}</h5>
+              <h6 class='d-flex align-items-center'>Team {{pangolin.team}} </h6></div>
+            <div class='card-description'>
+              <p >{{pangolin.race}}</p>
+              <p >Age:  {{pangolin.age|| 'inconnu'}}</p>
+              <p >{{pangolin.family}}</p>
+              <p >{{pangolin.food}}</p>
+            </div>
+            <div class='card-footer clearfix ng-star-inserted'>
+              <ul class='reactions'>
+                <li>
+                  <span (click)='acceptFriend(pangolin["id"])'>Accepter</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</pg-container>
+

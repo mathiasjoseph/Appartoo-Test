@@ -1,0 +1,22 @@
+overwrite: true
+config:
+  gqlImport: graphql-tag
+generates:
+  libs/graphql/src/generated.ts:
+    schema: pangolin.graphql
+    config:
+      namingConvention:
+        enumValues: keep
+    documents: ["apps/frontend/**/*.graphql", "apps/frontend/**/*.gql"]
+    plugins:
+      - "typescript"
+      - "typescript-apollo-angular"
+      - "typescript-resolvers"
+      - "typescript-operations"
+  libs/graphql/src/fragmentTypes.ts:
+    schema: pangolin.graphql
+    config:
+      useExplicitTyping: true
+    documents: ["apps/frontend/**/*.graphql", "apps/frontend/**/*.gql"]
+    plugins:
+      - "fragment-matcher"

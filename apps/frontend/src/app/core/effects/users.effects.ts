@@ -1,29 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 
 import { of } from 'rxjs';
 import { AuthState } from '../reducers';
 import {
+  acceptFriend,
+  acceptFriendFailure,
+  acceptFriendSuccess,
   addFriend,
   addFriendFailure,
-  addFriendSuccess, createFriend, createFriendFailure, createFriendSuccess,
+  addFriendSuccess,
+  inviteUser,
+  inviteUserFailure,
+  inviteUserSuccess,
+  loadCurrentPango,
   loadCurrentPangoSuccess,
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
+  registerSuccess,
   removeFriend,
   removeFriendFailure,
   removeFriendSuccess,
+  searchUser,
+  searchUserFailure,
+  searchUserSuccess,
   updateProfile,
   updateProfileFailure,
-  updateProfileSuccess
+  updateProfileSuccess,
 } from '../actions';
 import { UsersService } from '../services/users.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersEffects {
   updateProfile$ = createEffect(() =>
@@ -56,15 +68,16 @@ export class UsersEffects {
     )
   );
 
-  createFriend$ = createEffect(() =>
+  acceptFriend$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(createFriend),
-      mergeMap((payload) =>
-        this.usersService.createFriend(payload).pipe(
+      ofType(acceptFriend),
+      mergeMap(({ friendId }) =>
+        this.usersService.acceptFriend(friendId).pipe(
           map((data) => {
-            return createFriendSuccess({ user: data });
+            this.store.dispatch(loadCurrentPangoSuccess({ user: data }));
+            return acceptFriendSuccess({ user: data });
           }),
-          catchError((e) => of(createFriendFailure()))
+          catchError((e) => of(acceptFriendFailure()))
         )
       )
     )
@@ -85,6 +98,38 @@ export class UsersEffects {
     )
   );
 
+  inviteFriendSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(inviteUserSuccess),
+        tap(() => {
+          this.toastr.success('Le compte de votre amis est crée ');
+        })
+      ),
+    { dispatch: false }
+  );
+
+  inviteFriend$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(inviteUser),
+      mergeMap(({ age, email, username, password, firstname }) =>
+        this.usersService
+          .createFriend({ age, email, username, password, firstname })
+          .pipe(
+            map((data) => {
+              this.store.dispatch(loadCurrentPango());
+              return inviteUserSuccess({ user: data });
+            }),
+            catchError((e) =>
+              of(
+                inviteUserFailure({ age, email, username, password, firstname })
+              )
+            )
+          )
+      )
+    )
+  );
+
   loadUsers = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUsers),
@@ -99,10 +144,24 @@ export class UsersEffects {
     )
   );
 
+  searchUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(searchUser),
+      mergeMap(({ text }) =>
+        this.usersService.searchUser(text).pipe(
+          map((data) => {
+            return searchUserSuccess({ users: data });
+          }),
+          catchError((e) => of(searchUserFailure({ text })))
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private store: Store<AuthState>,
-    private usersService: UsersService
-  ) {
-  }
+    private usersService: UsersService,
+    private toastr: ToastrService
+  ) {}
 }

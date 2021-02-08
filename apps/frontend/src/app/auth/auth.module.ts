@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthComponent } from './components/auth/auth.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
-  declarations: [AuthComponent],
-  imports: [CommonModule, AuthRoutingModule, SharedModule, TabsModule]
+  declarations: [LoginComponent, RegisterComponent],
+  imports: [CommonModule, SharedModule, AuthRoutingModule],
 })
-export class AuthModule {
-}
+export class AuthModule {}

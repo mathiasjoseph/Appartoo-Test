@@ -1,106 +1,53 @@
-<div class='container'>
+<pg-container>
+  <div class='container '>
   <div class='row'>
     <div class='col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
       <div class='ui-block responsive-flex'>
         <div class='ui-block-title'>
-          <div  *ngIf='currentPangolin$|async as _currentUser' class='h6 title'>
-            Amis de {{_currentUser.firstname}}  ({{_currentUser.friends.length}})
+          <div *ngIf='currentPangolin$|async as _currentUser' class='h6 title'>
+            Vos amis ({{_currentUser.friendIds.length}})
           </div>
 
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
-<div class='container'>
-  <div class='row'>
-    <div class='col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
-      <div class='ui-block responsive-flex'>
-        <h6 >Créer un amis</h6>
-        <form [formGroup]='createFriendForm' >
-          <div class='col col-lg-6 col-md-6 col-sm-12 col-12'>
-            <div class='form-group '>
-              <label class='control-label'>Nom d'utilisateur</label>
-              <input class='form-control' placeholder='Username' type='text' formControlName='username'>
-            </div>
-            <div class='form-group '>
-              <label class='control-label'>Email</label>
-              <input class='form-control' placeholder="Email" type='text' formControlName='email'>
-            </div>
-            <div class='form-group '>
-              <label class='control-label'>Mot de passe</label>
-              <input class='form-control' placeholder="Pass" type='pass' formControlName='password'>
-            </div>
-          </div>
-
-          {{createFriendForm.value|json}}
-          <div class='col col-lg-6 col-md-6 col-sm-12 col-12'>
-            <button (click)='createFriend()' class='btn btn-primary btn-lg full-width'>Sauvegarde</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class='container'>
   <div class='row'>
     <div *ngFor='let pangolin of pangolins$|async'
-         class='col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12'>
-      <div class='ui-block'>
-        <div class='friend-item'>
-          <div class='friend-header-thumb'>
-            <img src='./assets/img/dI.jpg' alt='friend'>
-          </div>
-
-          <div class='friend-item-content'>
-
-            <div class='swiper-container my-10'>
-              <div class='swiper-wrapper'>
-                <div class='swiper-slide'>
-                  <div class='friend-count'>
-                    <span class='friend-count-item'>
-                      <div class='h6'>{{pangolin.friends.length}}</div>
-                      <div class='title'>Amis</div>
-                    </span>
-                    <span class='friend-count-item'>
-                      <div class='h6'>{{pangolin.age}}</div>
-                      <div class='title'>Age</div>
-                    </span>
-                    <span class='friend-count-item'>
-                      <div class='h6'>{{pangolin.team}}</div>
-                      <div class='title'>Team</div>
-                    </span>
-                  </div>
-                  <div class='control-block-button' data-swiper-parallax='-100'>
-                    <button *ngIf='!(isFriend(pangolin["_id"])|async)' (click)='addFriend(pangolin["_id"])'
-                            class='btn  bg-blue'>
-                      <i class='fa fa-plus' aria-hidden='true'></i>
-                    </button>
-
-                    <button *ngIf='(isFriend(pangolin["_id"])|async)' (click)='removeFriend(pangolin["_id"])'
-                            class='btn bg-google'>
-                      <i class='fa fa-times' aria-hidden='true'></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class='friend-avatar'>
-              <div class='author-content'>
-                <a href='#' class='h5 author-name'>{{pangolin.firstname}}</a>
-                <div class='country'>{{pangolin.race}}</div>
-                <div class='country'>{{pangolin.email}}</div>
-              </div>
-            </div>
-          </div>
+         class='col-md-3'>
+      <div class='col-md-12'>
+        <div class=' card social-card share col1 ng-star-inserted' style="width: inherit;">
+        <div class='circle' data-container='body' data-toggle='tooltip' title='Label'></div>
+        <div class='card-header clearfix'>
+          <div class='user-pic'>
+            <img width='33' class='ng-tns-c25-25 ng-star-inserted'
+                 src='./assets/img/dI.jpg'></div>
+          <h5>{{pangolin.firstname}}</h5>
+          <h6 class='d-flex align-items-center'>Team {{pangolin.team}} </h6></div>
+        <div class='card-description'>
+          <p >{{pangolin.race}}</p>
+          <p >Age:  {{pangolin.age|| 'inconnu'}}</p>
+          <p >{{pangolin.family}}</p>
+          <p >{{pangolin.food}}</p>
         </div>
+        <div class='card-footer clearfix ng-star-inserted'>
+          <div *ngIf='(isFriend(pangolin["id"])|async)' class='time'>Amis</div>
+          <div *ngIf='(isPendingFriend(pangolin["id"])|async)' class='time'>En attente</div>
+          <ul class='reactions'>
+            <li *ngIf='!(isFriend(pangolin["id"])|async) && !(isPendingFriend(pangolin["id"])|async)'>
+              <span (click)='addFriend(pangolin["id"])'>Ajouter</span>
+            </li>
+            <li *ngIf='(isFriend(pangolin["id"])|async)'>
+              <span (click)='removeFriend(pangolin["id"])'>Supprimer</span>
+            </li>
+          </ul>
+        </div>
+      </div>
       </div>
     </div>
 
 
   </div>
-</div>
+  </div>
+</pg-container>
+

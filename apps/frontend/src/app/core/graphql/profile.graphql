@@ -1,0 +1,5 @@
+mutation updateProfile($profile: ProfileInput!) {
+  updateProfile(profile: $profile) {
+    ...whoAmIFields
+  }
+}

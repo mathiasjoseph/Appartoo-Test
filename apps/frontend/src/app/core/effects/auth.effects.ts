@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 
 import { of } from 'rxjs';
 import { AuthService } from '../services';
@@ -17,40 +17,45 @@ import {
   logout,
   register,
   registerFailure,
-  registerSuccess
+  registerSuccess,
 } from '../actions';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthEffects {
+  loginSuccess = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginSuccess),
+      map(({ token }) => {
+        this.toastr.success('Vous êtes connecté(e) ');
+        AuthService.setToken(token);
+        this.router.navigateByUrl('/home');
+        return loadCurrentPango();
+      })
+    )
+  );
+
+  loginFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginFailure),
+        tap(() => {
+          this.toastr.error('Identifiants incorrects ');
+        })
+      ),
+    { dispatch: false }
+  );
+
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(logout),
       map(() => {
-        localStorage.removeItem(AuthService.TOKEN_PANGOLIN_KEY);
-        this.router.navigateByUrl('/auth');
+        AuthService.clearToken();
+        this.router.navigateByUrl('/auth/login');
         return loggedOut();
-      })
-    )
-  );
-
-  loginSuccess = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loginSuccess),
-      map(() => {
-        this.router.navigateByUrl('/');
-        return loadCurrentPango();
-      })
-    )
-  );
-
-  registerSuccess = createEffect(() =>
-    this.actions$.pipe(
-      ofType(registerSuccess),
-      map(() => {
-        return loadCurrentPango();
       })
     )
   );
@@ -70,29 +75,13 @@ export class AuthEffects {
     )
   );
 
-  register$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(register),
-      mergeMap((payload) =>
-        this.authService.register(payload).pipe(
-          map((data) => {
-            console.log(data);
-            return registerSuccess({ user: data });
-          }),
-          catchError((e) => of(registerFailure()))
-        )
-      )
-    )
-  );
-
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(login),
-      mergeMap((payload) =>
-        this.authService.login(payload).pipe(
+      mergeMap(({ email, password }) =>
+        this.authService.login({ email, password }).pipe(
           map((data) => {
-            console.log(data);
-            return loginSuccess({ user: data });
+            return loginSuccess({ user: data.user, token: data.token });
           }),
           catchError((e) => {
             console.log(e);
@@ -107,7 +96,7 @@ export class AuthEffects {
     private actions$: Actions,
     private store: Store<AuthState>,
     private authService: AuthService,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 }

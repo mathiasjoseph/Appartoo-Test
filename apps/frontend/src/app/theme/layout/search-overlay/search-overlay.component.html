@@ -1,0 +1,48 @@
+<div [@fadeAnimation]='isVisible' [class.hide]=!isVisible class='overlay'>
+  <div class='overlay-content has-results m-t-20'>
+    <div class='container-fluid'>
+      <img alt='logo' class='overlay-brand' src='assets/img/logo.png' width='78'>
+      <a (click)='close($event)' class='close-icon-light btn-link btn-rounded  overlay-close text-black'
+         href='javascript:void(0)'><i class='pg-icon'>close</i></a>
+    </div>
+    <div class='container-fluid'>
+      <input #searchField (ngModelChange)="searchKeyPress($event)" [(ngModel)]='value' autocomplete='off'
+             class='no-border overlay-search bg-transparent' placeholder='Trouver un pangolin...'>
+      <br>
+    </div>
+
+    <div class='container-fluid'>
+      <span><strong>suggestions :</strong></span> {{value}}<br>
+
+      <div class='search-results m-t-40'>
+        <p class='bold'>
+          Resultats
+        </p>
+
+        <div class='row'>
+          <div class='col-md-6'>
+
+            <div *ngFor='let user of users|async' class='d-flex m-t-15'>
+              <div class='thumbnail-wrapper d48 circular bg-success text-white inline m-t-10'>
+                <div>
+                  PG
+                </div>
+              </div>
+
+              <div class='p-l-10'>
+                <h5 class='m-b-5'>
+                  <span class='semi-bold result-name'>{{user.username}}</span>
+                </h5>
+
+                <p class='hint-text'>
+                  {{user.username}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

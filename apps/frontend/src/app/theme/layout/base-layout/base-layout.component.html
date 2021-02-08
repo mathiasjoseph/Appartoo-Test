@@ -1,0 +1,64 @@
+
+<pangolin-header extraClass='bg-primary p-r-0'>
+  <div class='header-inner header-md-height'>
+    <!-- START MOBILE SIDEBAR TOGGLE -->
+    <a href='javascript:void(0);' class='btn-icon-link header-icon toggle-sidebar d-lg-none' (click)="toggleHorizontalMenuMobile()">
+      <i class='pg-icon'>menu</i>
+    </a>
+    <!-- END MOBILE SIDEBAR TOGGLE -->
+    <div class=''>
+      <div class='brand inline no-border d-sm-inline-block'>
+        <img src='assets/img/logo.png'  width='78' height='22'>
+      </div>
+      <!-- START EMAIL MOBILE TOGGLE -->
+      <a href='javascript:void(0)' class='search-link ' (click)="openSearch($event)">
+        <i class='pg-icon'>search</i><span class='bold'>Recherche</span>
+      </a>
+    </div>
+    <div *ngIf='currentPangolin$|async as _currentUser' class='d-flex align-items-center'>
+      <!-- START User Info-->
+      <div class='pull-left p-r-10 fs-14 font-heading d-lg-inline-block d-none text-white'>
+        <span class='semi-bold'>{{_currentUser.username}}</span>
+      </div>
+      <div class='dropdown pull-right ' dropdown>
+        <button class='profile-dropdown-toggle' type='button' dropdownToggle id='profileDropdown'
+                aria-label='profile dropdown'>
+          <span class='thumbnail-wrapper d32 circular inline'>
+            <img src='assets/img/pango.jpg'  width='32' height='32'>
+          </span>
+        </button>
+        <div class='dropdown-menu dropdown-menu-right profile-dropdown' *dropdownMenu role='menu'>
+          <a href='javascript:void(0);' class='dropdown-item'><span>Connecté comme <br /><b>{{_currentUser.firstname}}</b></span></a>
+          <div class='dropdown-divider'></div>
+          <a href='javascript:void(0);' routerLink='/users/update-profile' class='dropdown-item'>Mon Profil</a>
+          <div class='dropdown-divider'></div>
+          <a href='javascript:void(0);' (click)='logout()' class='dropdown-item'>Déconnexion</a>
+          <div class='dropdown-divider'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='bg-white'>
+    <div class='container'>
+      <pg-horizontal-menu [Items]='menuItems' HideExtra='4'>
+        <ng-template #mobileSidebarFooter>
+          <!--(click)="openSearch($event)"-->
+          <a href='javascript:void(0)' class='search-link d-flex justify-content-between align-items-center d-lg-none'>Tap
+            here to search <i class='pg pg-search float-right'></i></a>
+        </ng-template>
+      </pg-horizontal-menu>
+    </div>
+  </div>
+</pangolin-header>
+<div class='page-container '>
+  <!-- START PAGE CONTENT WRAPPER -->
+  <div class='page-content-wrapper'>
+    <!-- START PAGE CONTENT -->
+    <div class='content'>
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+</div>
+
+<app-search-overlay></app-search-overlay>

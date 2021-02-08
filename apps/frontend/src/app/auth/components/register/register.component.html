@@ -1,0 +1,70 @@
+<div class="register-container full-height sm-p-t-30">
+  <div class="d-flex justify-content-center flex-column full-height ">
+
+    <img src="assets/img/logo.png" width="78">
+    <h3>"Pangolin discriminé, Pangolin outragé, Pangolin brisé, Pangolin martyrisé, mais Pangolin libéré !"</h3>
+
+    <form class="p-t-15" [formGroup]='registerForm'>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="username.invalid && (username.dirty || username.touched)">
+            <label>Nom d'utilisateur</label>
+            <input type="text" placeholder="Nom" class="form-control" formControlName='username' required >
+          </div>
+          <div *ngIf="username.invalid && (username.dirty || username.touched)" >
+            <label  *ngIf="username.errors.required" class="error" >Nom d'utilisateur requis.</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="email.invalid && (email.dirty || email.touched)">
+            <label>Email</label>
+            <input type="text" placeholder="Email" class="form-control" formControlName='email' required >
+          </div>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" >
+            <label  *ngIf="email.errors.required" class="error" >Email requis.</label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="password.invalid && (password.dirty || password.touched)">
+            <label>Mot de passe</label>
+            <input type="text" placeholder="Pass" class="form-control" formControlName='password' required >
+          </div>
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" >
+            <label  *ngIf="password.errors.required" class="error" >Mot de passe requis.</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="firstname.invalid && (firstname.dirty || firstname.touched)">
+            <label>Prénom</label>
+            <input type="text"  placeholder="" class="form-control" formControlName='firstname' required >
+          </div>
+          <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" >
+            <label  *ngIf="firstname.errors.required" class="error" >Prénom requis.</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="age.invalid && (age.dirty || age.touched)">
+            <label>Age</label>
+            <input type="number" min='0' max='100' placeholder="" class="form-control" formControlName='age' required >
+          </div>
+          <div *ngIf="age.invalid && (age.dirty || age.touched)" >
+            <label  *ngIf="age.errors.required" class="error" >Age requis.</label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row m-t-10">
+        <div class="col-lg-6">
+          <p><small>J'ai déja un compte <a routerLink='/auth/login' class="text-info">Se connecter</a> .</small></p>
+        </div>
+
+      </div>
+      <button class="btn btn-primary btn-cons m-t-10" (click)='register()'  [class.disabled]="registerForm.invalid">Créer mon compte</button>
+    </form>
+
+  </div>
+</div>
+

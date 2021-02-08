@@ -1,0 +1,29 @@
+<div class="menu-bar header-sm-height" #menuWrapper [class.open]="_horizontalMobileMenu">
+  <a href="javascript:void(0)" (click)="toggleHorizontalMenu()" class="btn-link header-icon toggle-sidebar d-lg-none">
+    <i class="pg-icon">close</i>
+  </a>
+  <ul >
+    <li *ngFor="let item of _renduerMenuItems" [class.open]="item.open || item.mToggle ==='open'"
+      [class.opening]="item.opening"  [routerLinkActive]="['active']"
+      [routerLinkActiveOptions]="{exact: true}">
+      <a *ngIf="item.routerLink" [routerLink]="[item.routerLink]"><span class="title">{{ item.label }}</span>
+      </a>
+      <a *ngIf="item.externalLink" href="{{item.externalLink}}" [attr.target]="item.target"><span
+        class="title">{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+  <ul #menuItemsList class="ghost-ul d-none d-lg-block">
+    <li *ngFor="let item of menuItems">
+      <a href="javascript:void(0);">
+        <span class="title">{{ item.label }}</span>
+        <span *ngIf="item.submenu" class=" arrow"></span>
+      </a>
+    </li>
+  </ul>
+  <ng-template [ngTemplateOutlet]="mobileSidebarFooter"></ng-template>
+</div>
+<div class="horizontal-menu-backdrop-dekstop" [style.display]="(currentItem?.open) ? 'block':'none'"
+  (click)="closeHorizontalMenu()"></div>
+<div class="horizontal-menu-backdrop" [style.display]="_horizontalMobileMenu ? 'block':'none'"
+  (click)="toggleHorizontalMenu()"></div>

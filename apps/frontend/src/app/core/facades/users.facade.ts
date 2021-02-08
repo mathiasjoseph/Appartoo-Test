@@ -1,20 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthState, selectUsersList } from '../reducers';
+import {
+  AuthState,
+  selectFriendRequest,
+  selectFriends,
+  selectSearchUser,
+  selectUsersList,
+} from '../reducers';
 import { Store } from '@ngrx/store';
-import { addFriend, createFriend, loadUsers, removeFriend, updateProfile } from '../actions';
-import { Profile, User } from '../models';
+import {
+  acceptFriend,
+  addFriend,
+  inviteUser,
+  loadUsers,
+  removeFriend,
+  searchUser,
+  updateProfile,
+} from '../actions';
+import { IProfile, IUser } from '@pangolin/types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersFacade {
-  list$: Observable<User[]> = this.store.select(selectUsersList);
+  list$: Observable<IUser[]> = this.store.select(selectUsersList);
+  searchResult$: Observable<IUser[]> = this.store.select(selectSearchUser);
+  friendRequests$: Observable<IUser[]> = this.store.select(selectFriendRequest);
+  friends$: Observable<IUser[]> = this.store.select(selectFriends);
 
-  constructor(private store: Store<AuthState>) {
-  }
+  constructor(private store: Store<AuthState>) {}
 
-  updateProfile(payload: Profile) {
+  updateProfile(payload: IProfile) {
     this.store.dispatch(updateProfile(payload));
   }
 
@@ -29,7 +45,21 @@ export class UsersFacade {
   addFriend(friendId: string) {
     this.store.dispatch(addFriend({ friendId }));
   }
-  createFriend(user: User){
-    this.store.dispatch(createFriend({user}));
+  acceptFriend(friendId: string) {
+    this.store.dispatch(acceptFriend({ friendId }));
+  }
+
+  inviteUser(payload: {
+    username: string;
+    password: string;
+    email: string;
+    age: number;
+    firstname: string;
+  }) {
+    this.store.dispatch(inviteUser({ ...payload }));
+  }
+
+  searchUser(text: string) {
+    this.store.dispatch(searchUser({ text }));
   }
 }

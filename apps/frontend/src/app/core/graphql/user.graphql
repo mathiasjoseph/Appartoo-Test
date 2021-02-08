@@ -1,0 +1,77 @@
+query whoAmI {
+  whoAmI {
+   ...whoAmIFields
+  }
+}
+query users {
+  users {
+    id
+    username
+    email
+    facebook
+    family
+    twitter
+    firstname
+    team,
+    age,
+    food,
+    race,
+  }
+}
+
+query searchUser($search: String!) {
+  searchUser(search: $search) {
+    username
+    email
+  }
+}
+
+mutation inviteUser($payload: RegisterInput!) {
+  inviteUser(payload: $payload) {
+    username
+    email
+  }
+}
+
+mutation inviteUser($payload: RegisterInput!) {
+  inviteUser(payload: $payload) {
+    username
+    email
+  }
+}
+
+mutation addFriend($friendId: String!) {
+  addFriend(friendId: $friendId) {
+    ...whoAmIFields
+  }
+}
+
+mutation acceptFriend($friendId: String!) {
+  acceptFriend(friendId: $friendId) {
+    ...whoAmIFields
+  }
+}
+
+mutation removeFriend($friendId: String!) {
+  removeFriend(friendId: $friendId) {
+    ...whoAmIFields
+  }
+}
+
+
+fragment whoAmIFields on WhoAmIType {
+  id
+  username
+  email
+  facebook
+  family,
+  twitter,
+  team,
+  age,
+  food,
+  race,
+  firstname,
+  friendIds,
+  friendRequestSubmissions,
+  friendRequests
+}

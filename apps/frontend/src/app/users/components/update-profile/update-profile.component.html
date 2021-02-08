@@ -1,0 +1,83 @@
+<div class="container full-height sm-p-t-30">
+  <div class="d-flex justify-content-center flex-column full-height ">
+    <form class="p-t-15" [formGroup]='profileForm'>
+      <h3>Mettre à jour mon profil</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Prénom</label>
+            <input type="text" class="form-control" formControlName='firstname' >
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Age</label>
+            <input type="number" class="form-control" formControlName='age' >
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Race</label>
+            <select class=' form-control' formControlName='race'>
+              <option value='Pangolin malais'>Pangolin malais</option>
+              <option value='Pangolin de Chine'>Pangolin de Chine</option>
+              <option value='Pangolin indien'>Pangolin indien</option>
+              <option value='Pangolin des Philippines'>Pangolin des Philippines</option>
+              <option value='Pangolin géant'>Pangolin géant</option>
+              <option value='Pangolin du Cap'>Pangolin du Cap</option>
+              <option value='Pangolin à longue queue'>Pangolin à longue queue</option>
+              <option value='Pangolin à petites écailles'>Pangolin à petites écailles</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Nourriture</label>
+            <select class=' form-control' formControlName='food'>
+              <option value='Fourmis'>Fourmis</option>
+              <option value='Termites'>Termites</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Famille</label>
+            <input type="text" class="form-control" formControlName='family' >
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Team</label>
+            <select class=' form-control' formControlName='team'>
+              <option value='Vert'>Vert</option>
+              <option value='Rouge'>Rouge</option>
+              <option value='Noir'>Noir</option>
+              <option value='Gris'>Gris</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Facebook</label>
+            <input type="text" class="form-control" formControlName='facebook' >
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default">
+            <label>Twitter</label>
+            <input type="text" class="form-control" formControlName='twitter' >
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-cons m-t-10" (click)='saveProfile()'  [class.disabled]="profileForm.invalid">Enregistrer</button>
+    </form>
+  </div>
+</div>
+
+

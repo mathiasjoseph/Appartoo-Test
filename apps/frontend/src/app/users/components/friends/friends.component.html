@@ -1,0 +1,38 @@
+<pg-container>
+  <div class='container '>
+
+    <div class='row'>
+      <div *ngFor='let pangolin of friends$|async'
+           class='col-md-3'>
+        <div class='col-md-12'>
+          <div class=' card social-card share col1 ng-star-inserted' style="width: inherit;">
+            <div class='circle' data-container='body' data-toggle='tooltip' title='Label'></div>
+            <div class='card-header clearfix'>
+              <div class='user-pic'>
+                <img width='33' class='ng-tns-c25-25 ng-star-inserted'
+                     src='./assets/img/dI.jpg'></div>
+              <h5>{{pangolin.firstname}}</h5>
+              <h6 class='d-flex align-items-center'>Team {{pangolin.team}} </h6></div>
+            <div class='card-description'>
+              <p >{{pangolin.race}}</p>
+              <p >Age:  {{pangolin.age|| 'inconnu'}}</p>
+              <p >{{pangolin.family}}</p>
+              <p >{{pangolin.food}}</p>
+            </div>
+            <div class='card-footer clearfix ng-star-inserted'>
+              <div  class='time'>Amis</div>
+              <ul class='reactions'>
+                <li>
+                  <span (click)='removeFriend(pangolin["id"])'>Supprimer</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</pg-container>
+

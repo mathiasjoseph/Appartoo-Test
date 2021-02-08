@@ -1,0 +1,62 @@
+<div class="container full-height sm-p-t-30">
+  <div class="d-flex justify-content-center flex-column full-height ">
+    <form class="p-t-15" [formGroup]='invitationForm'>
+      <h3>"Créer un compte pour un ami"</h3>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="username.invalid && (username.dirty || username.touched)">
+            <label>Nom d'utilisateur</label>
+            <input type="text" placeholder="Nom" class="form-control" formControlName='username' required >
+          </div>
+          <div *ngIf="username.invalid && (username.dirty || username.touched)" >
+            <label  *ngIf="username.errors.required" class="error" >Nom d'utilisateur requis.</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="email.invalid && (email.dirty || email.touched)">
+            <label>Email</label>
+            <input type="text" placeholder="Email" class="form-control" formControlName='email' required >
+          </div>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" >
+            <label  *ngIf="email.errors.required" class="error" >Email requis.</label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="password.invalid && (password.dirty || password.touched)">
+            <label>Mot de passe</label>
+            <input type="text" placeholder="Pass" class="form-control" formControlName='password' required >
+          </div>
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" >
+            <label  *ngIf="password.errors.required" class="error" >Mot de passe requis.</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="firstname.invalid && (firstname.dirty || firstname.touched)">
+            <label>Prénom</label>
+            <input type="text"  placeholder="" class="form-control" formControlName='firstname' required >
+          </div>
+          <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" >
+            <label  *ngIf="firstname.errors.required" class="error" >Prénom requis.</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group form-group-default" [class.has-error]="age.invalid && (age.dirty || age.touched)">
+            <label>Age</label>
+            <input type="number" min='0' max='100' placeholder="" class="form-control" formControlName='age' required >
+          </div>
+          <div *ngIf="age.invalid && (age.dirty || age.touched)" >
+            <label  *ngIf="age.errors.required" class="error" >Age requis.</label>
+          </div>
+        </div>
+
+      </div>
+      <button class="btn btn-primary btn-cons m-t-10" (click)='register()'  [class.disabled]="invitationForm.invalid">Inviter un ami</button>
+    </form>
+  </div>
+</div>
+
+

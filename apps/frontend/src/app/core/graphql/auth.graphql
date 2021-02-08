@@ -1,0 +1,14 @@
+
+
+mutation login($payload: LoginInput!) {
+  login(payload: $payload) {
+    user {
+      id
+      username,
+      email
+    },
+    token
+  }
+}
+
+

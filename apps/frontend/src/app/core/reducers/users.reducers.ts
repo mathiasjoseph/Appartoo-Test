@@ -1,21 +1,33 @@
-import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { User } from '../models';
-import { selectCurrentId } from './auth.reducers';
-import { loadUsersSuccess } from '../actions';
+import {
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
+import { selectCurrentId, selectCurrentPango } from './auth.reducers';
+import { loadUsersSuccess, searchUserSuccess } from '../actions';
+import { IUser } from '@pangolin/types';
 
 export interface UsersState {
-  list: User[];
+  list: IUser[];
+  searchUser: IUser[];
 }
 
 export const initialUsersState: UsersState = {
-  list: []
+  list: [],
+  searchUser: [],
 };
 
 export const reducerUsers = createReducer(
   initialUsersState,
   on(loadUsersSuccess, (state, { users }) => ({
     ...state,
-    list: users
+    list: users,
+  })),
+  on(searchUserSuccess, (state, { users }) => ({
+    ...state,
+    searchUser: users,
   }))
 );
 
@@ -33,6 +45,30 @@ export const selectPangoUsersState = createFeatureSelector<UsersState>(
 export const selectUsersList = createSelector(
   selectPangoUsersState,
   selectCurrentId,
-  (state: UsersState, currentId) =>
-    state.list.filter((i) => i['_id'] !== currentId)
+  (state: UsersState, currentId) => {
+    return state.list.filter((i) => i['id'] !== currentId);
+  }
+);
+
+export const selectFriendRequest = createSelector(
+  selectPangoUsersState,
+  selectCurrentPango,
+  (state: UsersState, currentUser) => {
+    return state.list.filter((user) =>
+      currentUser.friendRequests.includes(user.id)
+    );
+  }
+);
+
+export const selectFriends = createSelector(
+  selectPangoUsersState,
+  selectCurrentPango,
+  (state: UsersState, currentUser) => {
+    return state.list.filter((user) => currentUser.friendIds.includes(user.id));
+  }
+);
+
+export const selectSearchUser = createSelector(
+  selectPangoUsersState,
+  (state: UsersState) => state.searchUser
 );
